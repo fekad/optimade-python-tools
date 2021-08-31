@@ -112,6 +112,15 @@ class TestParserV1_0_0:
         with pytest.raises(BadRequest):
             self.parse("number=0.0.1")
 
+    def test_boolean_values(self):
+        assert isinstance(self.parse("property = TRUE"), Tree)
+        assert isinstance(self.parse("property != FALSE"), Tree)
+        with pytest.raises(BadRequest):
+            self.parse("(nsites = 3 AND nelements = 3) = FALSE")
+        with pytest.raises(BadRequest):
+            self.parse("property >= FALSE")
+
+
     def test_operators(self):
         # Basic boolean operations
         assert isinstance(

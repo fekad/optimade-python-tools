@@ -27,6 +27,7 @@ comparison: constant_first_comparison | property_first_comparison
 
 // Note: support for set_zip_op_rhs in comparison is OPTIONAL
 property_first_comparison: property ( value_op_rhs
+                                    | boolean_op_rhs
                                     | known_op_rhs
                                     | fuzzy_string_op_rhs
                                     | set_op_rhs
@@ -36,6 +37,8 @@ property_first_comparison: property ( value_op_rhs
 constant_first_comparison: constant OPERATOR ( non_string_value | not_implemented_string )
 
 value_op_rhs: OPERATOR value
+boolean_op_rhs: BOOLEANOPERATOR ( TRUE | FALSE )
+
 known_op_rhs: IS ( KNOWN | UNKNOWN )
 fuzzy_string_op_rhs: CONTAINS value
                    | STARTS [ WITH ] value
@@ -88,8 +91,12 @@ ALL:      "ALL"
 ONLY:     "ONLY"
 ANY:      "ANY"
 
+TRUE: "TRUE"
+FALSE: "FALSE"
+
 // Comparison OPERATORs
 OPERATOR: ( "<" ["="] | ">" ["="] | ["!"] "=" )
+BOOLEANOPERATOR: ["!"] "="
 
 IDENTIFIER: ( "_" | LCASE_LETTER ) ( "_" | LCASE_LETTER | DIGIT )*
 LCASE_LETTER: "a".."z"
